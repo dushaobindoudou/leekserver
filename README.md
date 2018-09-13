@@ -29,6 +29,24 @@ Dockerfile 文件放在 项目的根目录，docker pull/leek-server 从github�
 5. 设置 服务启动命令 ENTRYPOINT ["yarn", "start"]
 
 
+## 使用
+
+docker pull rrdfe/leekserver
+
+## 发布
+
+1. 确定新版本的tag 号
+
+2. 修改 Dockerfile 拉取的tag 号
+
+3. 发布 新版的 Dockerfile 到 docker hub
+
+4. 提交最新的修改 Dockerfile
+
+5. 推送 最新的tag 到github
+
+todo：发布自动化
+
 
 
 
