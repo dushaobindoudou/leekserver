@@ -33,10 +33,12 @@ WORKDIR /usr/app/
 RUN git clone https://github.com/dushaobindoudou/leekserver.git
 
 # 设置工作目录
-WORKDIR /usr/app/leek-server
+WORKDIR /usr/app/leekserver
 
+RUN ls -l
 # 切换到最新的tag代码
-RUN if ["x$TAG" = "xN"]; git checkout $(git describe --abbrev=0 --tags); else git checkout $TAG; fi
+RUN if [ "x$TAG" = "xN" ]; then git checkout $(git describe --abbrev=0 --tags) && echo noInput; \
+    else git checkout $TAG && echo hasInput; fi
 
 # 运行安装依赖包
 RUN yarn
