@@ -1,3 +1,4 @@
+
 # leekserver for docker
 
 leek server的 docker版本的实现
@@ -7,9 +8,9 @@ leek server的 docker版本的实现
 Dockerfile 文件放在 项目的根目录，docker pull/leek-server 从github拉取项目
 然后 根据项目中的 Dockerfile 初始化docker container
 
----- package.json    
----- Dockerfile    
----- node_modules    
+---- package.json
+---- Dockerfile
+---- node_modules
 ---- src
 
 ## Dockerfile 配置流程
@@ -48,7 +49,14 @@ docker pull rrdfe/leekserver
 todo：发布自动化
 
 
+### 注意事项
 
+1. docker build 打包的时候是需要打包到docker内的内容
 
+2. .dockerignore 添加忽略文件
 
+3. docker build -f 指定docker配置文件
 
+4. docker build -t 指定一个tag 创建一个新repository
+
+5. 
