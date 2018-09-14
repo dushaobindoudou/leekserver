@@ -5,4 +5,4 @@ app.use(async function(ctx) {
     ctx.body = 'Hello World leek server';
 });
 
-app.listen(3000);
+app.listen(3002);
