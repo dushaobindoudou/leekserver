@@ -7,4 +7,4 @@ app.use(async function(ctx) {
 
 app.listen(3002);
 
-console.log('server is runing on : ', 3002);
+console.log('server is runing on: ', 3002);
