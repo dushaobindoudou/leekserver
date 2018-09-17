@@ -5,6 +5,7 @@
 # 基于哪个镜像进行构建
 FROM node:10-alpine
 
+# 添加参数
 ARG TAG
 
 # 作者
