@@ -2,10 +2,10 @@
 #
 # VERSION               0.0.1
 
-ARG TAG="N"
-
 # 基于哪个镜像进行构建
 FROM node:10-alpine
+
+ARG TAG
 
 # 作者
 LABEL Author="dushaobin@rrdfe"
@@ -37,8 +37,8 @@ WORKDIR /usr/app/leekserver
 
 RUN ls -l
 # 切换到最新的tag代码
-RUN if [ "x$TAG" = "xN" ]; then git checkout $(git describe --abbrev=0 --tags) && echo noInput; \
-    else git checkout $TAG && echo hasInput; fi
+RUN if [ "x$TAG" = "x" ]; then git checkout -b $(git describe --abbrev=0 --tags); \
+    else git checkout $TAG; fi
 
 # 运行安装依赖包
 RUN yarn
