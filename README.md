@@ -7,10 +7,10 @@ leek server的 docker版本的实现
 
 Dockerfile 文件放在 项目的根目录
 
----- package.json
----- Dockerfile
----- node_modules
----- src
+---- package.json     
+---- Dockerfile     
+---- node_modules     
+---- src     
 
 ## Dockerfile 配置流程
 
