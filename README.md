@@ -12,6 +12,17 @@ Dockerfile 文件放在 项目的根目录
 ---- node_modules     
 ---- src     
 
+## 说明
+当前的Dockerfile 可以通过参数传递要构建的leekserver版本：    
+`docker build --build_arg TAG=v1.0.3`    
+如果没有传递参数默认拉取最新的 tag 进行构建，我们每个版本的image都是类似的，实际的项目内容根据传入的版本来确定     
+
+docker hub的tag 只是表明当前的代码更新到哪个版本，并没有太大的意义
+
+如果需要 docker hub 的tag 拉取的是固定的版本代码 需要修改 TAG 参数为指定的版本 例如：    
+v1.0.2的版本 需要把 TAG=v1.0.2 就可以了，根据实际的需要来进行相关的配置
+
+
 ## Dockerfile 配置流程
 
 1. 基于 node:10-alpine 进行构建
