@@ -1,6 +1,6 @@
 # Leek Server
 #
-# VERSION               0.0.1
+# VERSION               1.0.8
 
 # 基于哪个镜像进行构建
 FROM node:10-alpine

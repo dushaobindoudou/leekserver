@@ -1,6 +1,6 @@
 {
   "name": "leekserver",
-  "version": "1.0.0",
+  "version": "1.0.8",
   "description": "leek server ",
   "main": "index.js",
   "scripts": {
@@ -13,9 +13,10 @@
   },
   "keywords": [
     "leek",
-    "server;hot",
-    "update;react",
-    "native;"
+    "leekserver",
+    "update",
+    "react-native",
+    "hot-update"
   ],
   "author": "",
   "license": "MIT",
