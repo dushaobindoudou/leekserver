@@ -22,6 +22,10 @@ docker hub的tag 只是表明当前的代码更新到哪个版本，并没有太
 如果需要 docker hub 的tag 拉取的是固定的版本代码 需要修改 TAG 参数为指定的版本 例如：    
 v1.0.2的版本 需要把 TAG=v1.0.2 就可以了，根据实际的需要来进行相关的配置
 
+添加了 集成了 mysql 和 redis 并且自启动。redis.conf 是redis的配置文件， my.cnf 是mysql的配置文件
+
+startLeekServer.sh 是启动脚本，可以根据需求，来修改这个文件
+
 
 ## Dockerfile 配置流程
 
