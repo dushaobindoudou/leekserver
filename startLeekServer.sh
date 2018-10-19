@@ -7,6 +7,6 @@ sh /usr/mysql-app/startup.sh
 redis-server /etc/redis/redis.conf --daemonize yes
 
 # 启动服务
-npm start
+yarn run prod
 
 

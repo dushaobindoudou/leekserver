@@ -103,10 +103,10 @@ RUN mkdir -p /usr/app
 # 设置工作目录
 WORKDIR /usr/app/
 
-RUN git clone https://github.com/dushaobindoudou/leekserver.git
+RUN git clone https://gitlab.com/rrd-fe/noah-system.git
 
 # 设置工作目录
-WORKDIR /usr/app/leekserver
+WORKDIR /usr/app/noah-system
 
 # 切换到最新的tag代码
 RUN if [ "x$TAG" = "x" ]; then git checkout -b $(git describe --abbrev=0 --tags); \
@@ -114,12 +114,14 @@ RUN if [ "x$TAG" = "x" ]; then git checkout -b $(git describe --abbrev=0 --tags)
 
 # 安装yarn global
 RUN npm install -g yarn
+RUN npm install -g pm2@latest
 
 # 运行安装依赖包
-RUN yarn
+RUN yarn install
+RUN yarn run build
 
 # 对外暴露端口
-EXPOSE 3002
+EXPOSE 9030
 
 # 启动服务
 ENTRYPOINT ["/usr/local/bin/startLeekServer.sh"]
