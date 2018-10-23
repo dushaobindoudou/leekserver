@@ -14,6 +14,9 @@ LABEL Author="dushaobin@rrdfe"
 # 描述
 LABEL Description="Leek server for rrd react native hot update"
 
+# 修改apk镜像 为中科大地址
+RUN echo -e "http://mirrors.ustc.edu.cn/alpine/v3.8/main\nhttp://mirrors.ustc.edu.cn/alpine/v3.8/community" > /etc/apk/repositories
+
 # 添加git 服务
 RUN apk --update add git openssh && \
     rm -rf /var/lib/apt/lists/* && \
@@ -103,16 +106,21 @@ RUN mkdir -p /usr/app
 # 设置工作目录
 WORKDIR /usr/app/
 
-RUN git clone https://gitlab.com/rrd-fe/noah-system.git
+# 测试代码
+COPY index.js /usr/app/
+COPY package.json /usr/app/
+
+# RUN git clone https://github.com/dushaobindoudou/noah-system.git
 
 # 设置工作目录
-WORKDIR /usr/app/noah-system
+# WORKDIR /usr/app/noah-system
 
 # 切换到最新的tag代码
-RUN if [ "x$TAG" = "x" ]; then git checkout -b $(git describe --abbrev=0 --tags); \
-    else git checkout $TAG; fi
+# RUN if [ "x$TAG" = "x" ]; then git checkout -b $(git describe --abbrev=0 --tags); \
+#    else git checkout $TAG; fi
 
 # 安装yarn global
+RUN npm config set registry https://registry.npm.taobao.org 
 RUN npm install -g yarn
 RUN npm install -g pm2@latest
 
@@ -125,5 +133,4 @@ EXPOSE 9030
 
 # 启动服务
 ENTRYPOINT ["/usr/local/bin/startLeekServer.sh"]
-
 
