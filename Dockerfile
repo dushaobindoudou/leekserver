@@ -133,6 +133,11 @@ RUN set -ex; \
 
 # CMD ["python2"]
 
+# 添加对make的支持
+# RUN apk add --update make
+# 添加G++编译器
+# RUN apk add --update g++
+
 # 安装并初始化mysql
 RUN mkdir -p /usr/mysql-app
 VOLUME /usr/mysql-app
@@ -221,6 +226,13 @@ WORKDIR /usr/app/
 # COPY index.js /usr/app/
 # COPY package.json /usr/app/
 
+# 添加对make的支持
+RUN apk add --update make
+# 添加G++编译器
+RUN apk add --update g++
+# 添加 bash
+RUN apk add --update bash
+
 RUN git clone https://github.com/dushaobindoudou/noah-system.git
 
 # 设置工作目录
@@ -230,10 +242,36 @@ WORKDIR /usr/app/noah-system
 # RUN if [ "x$TAG" = "x" ]; then git checkout -b $(git describe --abbrev=0 --tags); \
 #    else git checkout $TAG; fi
 
+# 安装 leek-cli 需要写入权限
+# RUN ls -al /usr/local/lib/
+# RUN whoami
+# RUN sudo chown -R $(whoami) /usr/local/lib/node_modules
+# RUN ls -al /usr/local/lib/
+# RUN mkdir ~/.npm-global
+# RUN npm config set prefix '~/.npm-global'
+# RUN export PATH=~/.npm-global/bin:$PATH
+# RUN source ~/.profile
+
+
 # 安装yarn global
 RUN npm config set registry https://registry.npm.taobao.org 
 RUN npm install -g yarn
 RUN npm install -g pm2@latest
+
+# 犹豫需要额外权限，根据npm官方推荐的方式改写
+RUN mkdir ~/.npm-global
+RUN npm config set prefix '~/.npm-global'
+RUN export PATH=~/.npm-global/bin:$PATH
+
+# 安装node-sass的时候需要读写权限，建议leek-cli放到dev依赖里面  RUN chown -R $(whoami) /usr/local/lib/node_modules
+RUN npm install -g leek-cli --unsafe-perm --registry https://registry.npmjs.org/
+
+# 重新ln文件为全局可以访问
+RUN ln -s ~/.npm-global/bin/leek /usr/local/bin/leek
+
+# RUN yarn --help
+# RUN pm2 --help
+# RUN leek --help
 
 # 运行安装依赖包
 RUN yarn install
