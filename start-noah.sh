@@ -12,6 +12,4 @@ yarn run mysql:init
 # 启动服务
 yarn run prod
 
-#pm2-runtime pm2.json
-#node src/index.js
 

@@ -9,10 +9,10 @@ FROM node:10-alpine
 ARG TAG
 
 # 作者
-LABEL Author="dushaobin@rrdfe"
+LABEL Author="rrdfe"
 
 # 描述
-LABEL Description="Leek server for rrd react native hot update"
+LABEL Description="noah system is used for hot update of react native"
 
 # 修改apk镜像 为中科大地址
 RUN echo -e "http://mirrors.ustc.edu.cn/alpine/v3.8/main\nhttp://mirrors.ustc.edu.cn/alpine/v3.8/community" > /etc/apk/repositories
@@ -209,7 +209,7 @@ COPY redis.conf /etc/redis/redis.conf
 ENV NODE_ENV production
 
 # 复制启动app脚本
-COPY startLeekServer.sh /usr/local/bin/
+COPY start-noah.sh /usr/local/bin/
 
 # 创建工作目录
 RUN mkdir -p /usr/app
@@ -248,26 +248,23 @@ RUN mkdir ~/.npm-global
 RUN npm config set prefix '~/.npm-global'
 RUN export PATH=~/.npm-global/bin:$PATH
 
-# 安装node-sass的时候需要读写权限，建议leek-cli放到dev依赖里面  RUN chown -R $(whoami) /usr/local/lib/node_modules
+# 安装node-sass的时候需要读写权限，建议leek-cli放到dev依赖里面  可以使用 RUN chown -R $(whoami) /usr/local/lib/node_modules 修改权限
 RUN npm install -g leek-cli --unsafe-perm --registry https://registry.npmjs.org/ --sass-binary-site=http://npm.taobao.org/mirrors/node-sass
 
 # 重新ln文件为全局可以访问
 RUN ln -s ~/.npm-global/bin/leek /usr/local/bin/leek
-
-# RUN yarn --help
-# RUN pm2 --help
-# RUN leek --help
 
 # 运行安装依赖包
 RUN yarn install
 
 # 创建noah日志目录
 RUN mkdir -p /usr/app/noah-log/pm2log
+
 RUN yarn run build
 
 # 对外暴露端口
 EXPOSE 9030
 
 # 启动服务
-ENTRYPOINT ["/usr/local/bin/startLeekServer.sh"]
+ENTRYPOINT ["/usr/local/bin/start-noah.sh"]
 

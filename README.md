@@ -1,59 +1,59 @@
 
-# leekserver for docker
+# noah system for docker
 
-leek server的 docker版本的实现
+noah system 的 docker安装版本
 
 ## 项目结构
 
 Dockerfile 文件放在 项目的根目录
 
 ---- package.json     
----- Dockerfile     
----- node_modules     
----- src     
+---- Dockerfile        
+---- index.js （测试脚本）     
+---- my.cnf mysql配置文件     
+---- redis.conf redis配置文件      
+---- docker-entrypoint.sh （redis的启动脚本，暂时用不到）   
+---- startup.sh mysql的启动脚本可以根据需求进行修改
 
 ## 说明
-当前的Dockerfile 可以通过参数传递要构建的leekserver版本：    
-`docker build --build_arg TAG=v1.0.3`    
-如果没有传递参数默认拉取最新的 tag 进行构建，我们每个版本的image都是类似的，实际的项目内容根据传入的版本来确定     
 
-docker hub的tag 只是表明当前的代码更新到哪个版本，并没有太大的意义
+当前docker版本会拉去最新的noah-system代码进行构建运行，
+正式发布的时候需要指定当前代码的tag 号
+原因：后续版本的基础环境变化，需要更新docker image
 
-如果需要 docker hub 的tag 拉取的是固定的版本代码 需要修改 TAG 参数为指定的版本 例如：    
-v1.0.2的版本 需要把 TAG=v1.0.2 就可以了，根据实际的需要来进行相关的配置
+集成了 mysql 和 redis 并且自启动。redis.conf 是redis的配置文件， my.cnf 是mysql的配置文件
+默认安装了，python、make、bash、gcc、g++包
 
-添加了 集成了 mysql 和 redis 并且自启动。redis.conf 是redis的配置文件， my.cnf 是mysql的配置文件
-
-startLeekServer.sh 是启动脚本，可以根据需求，来修改这个文件
+start-noah.sh 是启动脚本，可以根据需求，来修改这个文件
 
 
 ## Dockerfile 配置流程
 
 1. 基于 node:10-alpine 进行构建
 
-2. 创建项目 根目录 /usr/nodejs/app
+2. 创建项目 根目录 /usr/app
 
 3. 拉取指定 tag 的 代码 到 /usr/app
 
-4. 切换运行的目录到 /usr/app/leekserver
+4. 切换运行的目录到 /usr/app/noah-system
 
 5. 运行 yarn install 进行安装
 
-6. 导出 3002 端口 （leek server 的默认端口）
+6. 导出 9030 端口 (noah system 的默认端口）
 
-5. 设置 服务启动命令 ENTRYPOINT ["npm", "start"]
+5. 设置 服务启动命令 ENTRYPOINT ["${path}/start-noah.sh"]
 
 
 ## 使用
 
-docker pull rrdfe/leekserver    
-docker pull dushaobin/leekserver
+docker pull rrdfe/leekserver    (待定)      
+docker pull dushaobin/leekserver    (待定)      
 
 启动docker
 
-docker run -p 3002:3002 dushaobin/leekserver
+docker run -d -p 9030:9030 dushaobin/leekserver
 
-启动完成后可以通过 3002端口来访问 leekserver服务
+启动完成后可以通过 9030端口来访问 noah system服务
 
 ## 发布
 
@@ -79,4 +79,3 @@ docker run -p 3002:3002 dushaobin/leekserver
 4. docker build -t 指定一个tag 创建一个新repository
 
 5. docker 发布前 需要使用 tag 命令 明确要发布的 名称
-

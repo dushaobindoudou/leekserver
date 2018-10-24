@@ -5,6 +5,6 @@ app.use(async function(ctx) {
     ctx.body = 'Hello World [leek server] master/ auto build when push tag';
 });
 
-app.listen(3002);
+app.listen(9030);
 
-console.log('server is runing on: ', 3002);
+console.log('server is runing on: ', 9030);
