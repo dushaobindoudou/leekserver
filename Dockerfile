@@ -133,11 +133,6 @@ RUN set -ex; \
 
 # CMD ["python2"]
 
-# 添加对make的支持
-# RUN apk add --update make
-# 添加G++编译器
-# RUN apk add --update g++
-
 # 安装并初始化mysql
 RUN mkdir -p /usr/mysql-app
 VOLUME /usr/mysql-app
@@ -242,16 +237,6 @@ WORKDIR /usr/app/noah-system
 # RUN if [ "x$TAG" = "x" ]; then git checkout -b $(git describe --abbrev=0 --tags); \
 #    else git checkout $TAG; fi
 
-# 安装 leek-cli 需要写入权限
-# RUN ls -al /usr/local/lib/
-# RUN whoami
-# RUN sudo chown -R $(whoami) /usr/local/lib/node_modules
-# RUN ls -al /usr/local/lib/
-# RUN mkdir ~/.npm-global
-# RUN npm config set prefix '~/.npm-global'
-# RUN export PATH=~/.npm-global/bin:$PATH
-# RUN source ~/.profile
-
 
 # 安装yarn global
 RUN npm config set registry https://registry.npm.taobao.org 
@@ -264,7 +249,7 @@ RUN npm config set prefix '~/.npm-global'
 RUN export PATH=~/.npm-global/bin:$PATH
 
 # 安装node-sass的时候需要读写权限，建议leek-cli放到dev依赖里面  RUN chown -R $(whoami) /usr/local/lib/node_modules
-RUN npm install -g leek-cli --unsafe-perm --registry https://registry.npmjs.org/
+RUN npm install -g leek-cli --unsafe-perm --registry https://registry.npmjs.org/ --sass-binary-site=http://npm.taobao.org/mirrors/node-sass
 
 # 重新ln文件为全局可以访问
 RUN ln -s ~/.npm-global/bin/leek /usr/local/bin/leek
@@ -275,6 +260,9 @@ RUN ln -s ~/.npm-global/bin/leek /usr/local/bin/leek
 
 # 运行安装依赖包
 RUN yarn install
+
+# 创建noah日志目录
+RUN mkdir -p /usr/app/noah-log/pm2log
 RUN yarn run build
 
 # 对外暴露端口
