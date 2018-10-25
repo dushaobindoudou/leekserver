@@ -46,14 +46,15 @@ start-noah.sh 是启动脚本，可以根据需求，来修改这个文件
 
 ## 使用
 
-docker pull rrdfe/leekserver:noah-system    (待定)      
-docker pull dushaobin/leekserver :noah-system   (待定)      
+docker pull rrdfe/leekserver:noahwdemo    (待定)      
+docker pull dushaobin/leekserver:noahwdemo   (待定)      
 
 启动docker
 
-docker run -d -p 9030:9030 -p 3306:3306 -v ~/packages:/usr/app/packages dushaobin/leekserver
+docker run -d  -p 3000:3000 -p 9030:9030 -p 3306:3306 -v ~/packages:/usr/app/packages dushaobin/leekserver
 
-启动完成后可以通过 9030端口来访问 noah system服务
+启动完成后可以通过 9030端口来访问 noah system服务     
+使用 3000端口来访问node demo
 
 ## 发布
 
