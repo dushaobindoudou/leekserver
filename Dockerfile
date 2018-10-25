@@ -228,6 +228,14 @@ RUN apk add --update g++
 # 添加 bash
 RUN apk add --update bash
 
+<<<<<<< HEAD
+=======
+# RUN git clone https://github.com/rrd-fe/noah-system.git
+
+# 设置工作目录
+# WORKDIR /usr/app/noah-system
+
+>>>>>>> 6c826fa83a8ca8a084e7d3a4fce81de285cb6117
 # 切换到最新的tag代码
 # RUN if [ "x$TAG" = "x" ]; then git checkout -b $(git describe --abbrev=0 --tags); \
 #    else git checkout $TAG; fi
@@ -238,16 +246,20 @@ RUN npm config set registry https://registry.npm.taobao.org
 RUN npm install -g yarn
 RUN npm install -g pm2@latest
 
-# 对于需要额外权限的global模块，根据npm官方推荐的方式改写
+# node-sass 需要额外的权限，根据npm官方推荐的方式改写
 RUN mkdir ~/.npm-global
 RUN npm config set prefix '~/.npm-global'
-ENV PATH ~/.npm-global/bin/:$PATH
+# RUN export PATH=~/.npm-global/bin:$PATH
+ENV PATH ~/.npm-global/bin:$PATH
 
 # 安装node-sass的时候需要读写权限，建议leek-cli放到dev依赖里面  可以使用 RUN chown -R $(whoami) /usr/local/lib/node_modules 修改权限
 RUN npm install -g leek-cli --unsafe-perm --registry https://registry.npmjs.org/ --sass-binary-site=http://npm.taobao.org/mirrors/node-sass
 
-# 拉取最新代码
-RUN git clone https://github.com/rrd-fe/noah-system.git
+# 重新ln文件为全局可以访问
+# RUN ln -s ~/.npm-global/bin/leek /usr/local/bin/leek
+
+# 安装部署 noah system
+RUN git clone https://github.com/rrd-fe/noah-system.git 
 
 # 设置工作目录
 WORKDIR /usr/app/noah-system
@@ -261,6 +273,16 @@ RUN mkdir -p /usr/app/noah-log/pm2log
 # RUN yarn run build
 RUN yarn run docker:deploy
 
+# 安装部署react-native-tinker-node-api-demo
+
+WORKDIR /usr/app
+
+RUN git clone https://github.com/rrd-fe/react-native-tinker-node-api-demo.git
+
+WORKDIR /usr/app/react-native-tinker-node-api-demo
+
+RUN yarn install
+
 
 # 测试代码
 # RUN mkdir -p /usr/app/test
@@ -272,6 +294,7 @@ RUN yarn run docker:deploy
 
 # 对外暴露端口
 EXPOSE 9030
+EXPOSE 3000
 EXPOSE 3306
 
 # 启动服务
