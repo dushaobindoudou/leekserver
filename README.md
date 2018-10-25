@@ -46,8 +46,8 @@ start-noah.sh 是启动脚本，可以根据需求，来修改这个文件
 
 ## 使用
 
-docker pull rrdfe/leekserver:noah-system    (待定)      
-docker pull dushaobin/leekserver :noah-system   (待定)      
+docker pull rrdfe/leekserver:noahsys    (待定)      
+docker pull dushaobin/leekserver:noahsys  (待定)      
 
 启动docker
 
