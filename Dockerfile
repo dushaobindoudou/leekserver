@@ -228,7 +228,7 @@ RUN apk add --update g++
 # 添加 bash
 RUN apk add --update bash
 
-RUN git clone https://github.com/dushaobindoudou/noah-system.git
+RUN git clone https://github.com/rrd-fe/noah-system.git -v
 
 # 设置工作目录
 WORKDIR /usr/app/noah-system
@@ -260,7 +260,17 @@ RUN yarn install
 # 创建noah日志目录
 RUN mkdir -p /usr/app/noah-log/pm2log
 
-RUN yarn run build
+# RUN yarn run build
+RUN yarn run docker:deploy
+
+
+# 测试代码
+# RUN mkdir -p /usr/app/test
+# WORKDIR /usr/app/test
+# COPY index.js /usr/app/test
+# COPY package.json /usr/app/test
+# RUN yarn install
+
 
 # 对外暴露端口
 EXPOSE 9030
