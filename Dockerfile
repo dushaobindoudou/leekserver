@@ -228,11 +228,6 @@ RUN apk add --update g++
 # 添加 bash
 RUN apk add --update bash
 
-RUN git clone https://github.com/rrd-fe/noah-system.git -v
-
-# 设置工作目录
-WORKDIR /usr/app/noah-system
-
 # 切换到最新的tag代码
 # RUN if [ "x$TAG" = "x" ]; then git checkout -b $(git describe --abbrev=0 --tags); \
 #    else git checkout $TAG; fi
@@ -243,16 +238,19 @@ RUN npm config set registry https://registry.npm.taobao.org
 RUN npm install -g yarn
 RUN npm install -g pm2@latest
 
-# 犹豫需要额外权限，根据npm官方推荐的方式改写
+# 对于需要额外权限的global模块，根据npm官方推荐的方式改写
 RUN mkdir ~/.npm-global
 RUN npm config set prefix '~/.npm-global'
-RUN export PATH=~/.npm-global/bin:$PATH
+ENV PATH ~/.npm-global/bin/:$PATH
 
 # 安装node-sass的时候需要读写权限，建议leek-cli放到dev依赖里面  可以使用 RUN chown -R $(whoami) /usr/local/lib/node_modules 修改权限
 RUN npm install -g leek-cli --unsafe-perm --registry https://registry.npmjs.org/ --sass-binary-site=http://npm.taobao.org/mirrors/node-sass
 
-# 重新ln文件为全局可以访问
-RUN ln -s ~/.npm-global/bin/leek /usr/local/bin/leek
+# 拉取最新代码
+RUN git clone https://github.com/rrd-fe/noah-system.git
+
+# 设置工作目录
+WORKDIR /usr/app/noah-system
 
 # 运行安装依赖包
 RUN yarn install
@@ -274,6 +272,7 @@ RUN yarn run docker:deploy
 
 # 对外暴露端口
 EXPOSE 9030
+EXPOSE 3306
 
 # 启动服务
 ENTRYPOINT ["/usr/local/bin/start-noah.sh"]
