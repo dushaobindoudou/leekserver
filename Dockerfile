@@ -228,14 +228,11 @@ RUN apk add --update g++
 # 添加 bash
 RUN apk add --update bash
 
-<<<<<<< HEAD
-=======
 # RUN git clone https://github.com/rrd-fe/noah-system.git
 
 # 设置工作目录
 # WORKDIR /usr/app/noah-system
 
->>>>>>> 6c826fa83a8ca8a084e7d3a4fce81de285cb6117
 # 切换到最新的tag代码
 # RUN if [ "x$TAG" = "x" ]; then git checkout -b $(git describe --abbrev=0 --tags); \
 #    else git checkout $TAG; fi
