@@ -211,6 +211,12 @@ ENV NODE_ENV production
 # 复制启动app脚本
 COPY start-noah.sh /usr/local/bin/
 
+RUN mkdir -p ~/.ssh/
+# 复制ssh key
+# COPY id_rsa.pub ~/.ssh/
+# 临时添加脚本用来调试
+ADD id_rsa.pub /root/.ssh/id_rsa.pub
+
 # 创建工作目录
 RUN mkdir -p /usr/app
 
