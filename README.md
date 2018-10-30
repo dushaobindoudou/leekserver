@@ -51,7 +51,7 @@ docker pull dushaobin/leekserver:noahwdemo3   (待定)
 
 启动docker
 
-docker run -d  -p 3000:3000 -p 9030:9030 -p 3306:3306 -v ~/packages:/usr/app/packages dushaobin/leekserver
+docker run -d  -p 3000:3000 -p 9030:9030 -p 3306:3306 -v ~/packages:/usr/app/packages dushaobin/leekserver:noahwdemo3
 
 启动完成后可以通过 9030端口来访问 noah system服务     
 使用 3000端口来访问node demo
